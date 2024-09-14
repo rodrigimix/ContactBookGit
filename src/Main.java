@@ -1,10 +1,14 @@
 import contactBook.Contact;
 import contactBook.ContactBook;
 
-import java.text.CompactNumberFormat;
 import java.util.Scanner;
 
-
+/**
+ * Main Class
+ * @Author Diogo Jesus - 59969
+ * @Author Miguel Sequeira - 63220
+ * @Author Rodrigo Marques - 64411
+ */
 public class Main {
     //Constantes que definem os comandos
     public static final String ADD_CONTACT    = "AC";
@@ -27,6 +31,7 @@ public class Main {
     public static final String BOOK_EMPTY = "contactBook.Contact book empty.";
     public static final String DUPLICATE_NUMBERS = "There are contacts that share phone numbers.";
     public static final String NO_DUPLICATE_NUMBERS = "All contacts have different phone numbers.";
+    public static final String PHONE_NOT_EXIST = "Phone number does not exist.";
     public static final String QUIT_MSG = "Goodbye!";
     public static final String COMMAND_ERROR = "Unknown command.";
 
@@ -75,17 +80,11 @@ public class Main {
         in.close();
     }
 
-    private static void getContact(Scanner in, ContactBook cBook) {
-        int phoneNumber = Integer.parseInt(in.nextLine());
-        String contactName = cBook.getContactName(phoneNumber);
-        if(contactName.equals("")){
-            System.out.println("Phone number does not exist.");
-        }
-        else
-            System.out.println(contactName);
-    }
-
-
+    /**
+     * getCommand - function that ask the user the command to use on this program
+     * @param in - Scanner's Object
+     * @return the command that user wants to use
+     */
     private static String getCommand(Scanner in) {
         String input;
 
@@ -93,6 +92,12 @@ public class Main {
         return input;
     }
 
+    /**
+     * addContact - add the contact to the ContactBook
+     * This operation fails if: (1) there is already a contact with that name
+     * @param in Scanner's Object
+     * @param cBook ContactBook's Object
+     */
     private static void addContact(Scanner in, ContactBook cBook) {
         String name, email;
         int phone;
@@ -107,6 +112,12 @@ public class Main {
         else System.out.println(CONTACT_EXISTS);
     }
 
+    /**
+     * deleteContact - delete the contact in ContactBook
+     * This operation fails if (1) there is no contact with that name
+     * @param in Scanner's Object
+     * @param cBook ContactBook's Object
+     */
     private static void deleteContact(Scanner in, ContactBook cBook) {
         String name;
         name = in.nextLine();
@@ -117,6 +128,12 @@ public class Main {
         else System.out.println(NAME_NOT_EXIST);
     }
 
+    /**
+     * getPhone - returns the phone number of the person from ContactBook
+     * The operation fails if (1) the name does not match any existing contact
+     * @param in Scanner's Object
+     * @param cBook ContactBook's Object
+     */
     private static void getPhone(Scanner in, ContactBook cBook) {
         String name;
         name = in.nextLine();
@@ -126,6 +143,12 @@ public class Main {
         else System.out.println(NAME_NOT_EXIST);
     }
 
+    /**
+     * getEmail - returns the email of the person from ContactBook
+     * The operation fails if (1) the name does not match any existing contact
+     * @param in Scanner's Object
+     * @param cBook ContactBook's Object
+     */
     private static void getEmail(Scanner in, ContactBook cBook) {
         String name;
         name = in.nextLine();
@@ -135,6 +158,12 @@ public class Main {
         else System.out.println(NAME_NOT_EXIST);
     }
 
+    /**
+     * setPhone - update the phone number of the person to the ContactBook
+     * The operation fails if (1) the name does not match an existing contact
+     * @param in Scanner's Object
+     * @param cBook ContactBook's Object
+     */
     private static void setPhone(Scanner in, ContactBook cBook) {
         String name;
         int phone;
@@ -147,6 +176,12 @@ public class Main {
         else System.out.println(NAME_NOT_EXIST);
     }
 
+    /**
+     * setEmail - update the email of the person to the ContactBook
+     * The operation fails if (1) the name does not match an existing contact
+     * @param in Scanner's Object
+     * @param cBook ContactBook's Object
+     */
     private static void setEmail(Scanner in, ContactBook cBook) {
         String name;
         String email;
@@ -159,6 +194,11 @@ public class Main {
         else System.out.println(NAME_NOT_EXIST);
     }
 
+    /**
+     * listAllContacts - List, by order of insertion, the existing contacts in the ContactBook
+     * If the contact book has no contacts, the error message is "Contact book empty."
+     * @param cBook ContactBook's Object
+     */
     private static void listAllContacts(ContactBook cBook) {
         if (cBook.getNumberOfContacts() != 0) {
             cBook.initializeIterator();
@@ -170,10 +210,31 @@ public class Main {
         else System.out.println(BOOK_EMPTY);
     }
 
+    /**
+     * getContact - Lookup a contact given its phone number
+     * The operation fails if: (1) the phone number does not match any contact
+     * @param in Scanner's Object
+     * @param cBook ContactBook's Object
+     */
+    private static void getContact(Scanner in, ContactBook cBook) {
+        int phoneNumber = Integer.parseInt(in.nextLine());
+        String contactName = cBook.getContactName(phoneNumber);
+        if(!contactName.isEmpty()){
+            System.out.println(contactName);
+        } else{
+            System.out.println(PHONE_NOT_EXIST);
+        }
+
+    }
+
+    /**
+     * checkDuplicateNumbers - Check if there are contacts with the same phone number
+     * @param cBook ContactBook's Object
+     */
     private static void checkDuplicateNumbers(ContactBook cBook) {
         if (cBook.getNumberOfContacts() != 0 && cBook.doesBookContainDuplicatePhoneNumbers()) {
             System.out.println(DUPLICATE_NUMBERS);
-        }else {
+        } else {
             System.out.println(NO_DUPLICATE_NUMBERS);
         }
     }
