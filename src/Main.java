@@ -31,6 +31,7 @@ public class Main {
     public static final String BOOK_EMPTY = "contactBook.Contact book empty.";
     public static final String DUPLICATE_NUMBERS = "There are contacts that share phone numbers.";
     public static final String NO_DUPLICATE_NUMBERS = "All contacts have different phone numbers.";
+    public static final String PHONE_NOT_EXIST = "Phone number does not exist.";
     public static final String QUIT_MSG = "Goodbye!";
     public static final String COMMAND_ERROR = "Unknown command.";
 
@@ -218,11 +219,12 @@ public class Main {
     private static void getContact(Scanner in, ContactBook cBook) {
         int phoneNumber = Integer.parseInt(in.nextLine());
         String contactName = cBook.getContactName(phoneNumber);
-        if(contactName.equals("")){
-            System.out.println("Phone number does not exist.");
-        }
-        else
+        if(!contactName.isEmpty()){
             System.out.println(contactName);
+        } else{
+            System.out.println(PHONE_NOT_EXIST);
+        }
+
     }
 
     /**
@@ -232,7 +234,7 @@ public class Main {
     private static void checkDuplicateNumbers(ContactBook cBook) {
         if (cBook.getNumberOfContacts() != 0 && cBook.doesBookContainDuplicatePhoneNumbers()) {
             System.out.println(DUPLICATE_NUMBERS);
-        }else {
+        } else {
             System.out.println(NO_DUPLICATE_NUMBERS);
         }
     }
