@@ -1,7 +1,5 @@
 package contactBook;
 
-import contactBook.Contact;
-
 /**
  * ContactBook Class
  * @Author Diogo Jesus - 59969
