@@ -14,6 +14,7 @@ public class Main {
     public static final String SET_PHONE      = "SP";
     public static final String SET_EMAIL      = "SE";
     public static final String LIST_CONTACTS  = "LC";
+    public static final String CHECK_DUPLICATE_NUMBERS = "EP";
     public static final String GET_NUMBER     = "GN";
     public static final String QUIT           = "Q";
 
@@ -24,6 +25,8 @@ public class Main {
     public static final String CONTACT_REMOVED = "contactBook.Contact removed.";
     public static final String CONTACT_UPDATED = "contactBook.Contact updated.";
     public static final String BOOK_EMPTY = "contactBook.Contact book empty.";
+    public static final String DUPLICATE_NUMBERS = "There are contacts that share phone numbers.";
+    public static final String NO_DUPLICATE_NUMBERS = "All contacts have different phone numbers.";
     public static final String QUIT_MSG = "Goodbye!";
     public static final String COMMAND_ERROR = "Unknown command.";
 
@@ -55,10 +58,12 @@ public class Main {
                 case LIST_CONTACTS:
                     listAllContacts(cBook);
                     break;
+                case CHECK_DUPLICATE_NUMBERS:
+                    checkDuplicateNumbers(cBook);
+                    break;
                 case GET_NUMBER:
                     getContact(in,cBook);
                     break;
-
                 default:
                     System.out.println(COMMAND_ERROR);
             }
@@ -163,5 +168,13 @@ public class Main {
             }
         }
         else System.out.println(BOOK_EMPTY);
+    }
+
+    private static void checkDuplicateNumbers(ContactBook cBook) {
+        if (cBook.getNumberOfContacts() != 0 && cBook.doesBookContainDuplicatePhoneNumbers()) {
+            System.out.println(DUPLICATE_NUMBERS);
+        }else {
+            System.out.println(NO_DUPLICATE_NUMBERS);
+        }
     }
 }
