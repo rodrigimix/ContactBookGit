@@ -79,17 +79,6 @@ public class Main {
         in.close();
     }
 
-    private static void getContact(Scanner in, ContactBook cBook) {
-        int phoneNumber = Integer.parseInt(in.nextLine());
-        String contactName = cBook.getContactName(phoneNumber);
-        if(contactName.equals("")){
-            System.out.println("Phone number does not exist.");
-        }
-        else
-            System.out.println(contactName);
-    }
-
-
     /**
      * getCommand - function that ask the user the command to use on this program
      * @param in - Scanner's Object
@@ -220,6 +209,26 @@ public class Main {
         else System.out.println(BOOK_EMPTY);
     }
 
+    /**
+     * getContact - Lookup a contact given its phone number
+     * The operation fails if: (1) the phone number does not match any contact
+     * @param in Scanner's Object
+     * @param cBook ContactBook's Object
+     */
+    private static void getContact(Scanner in, ContactBook cBook) {
+        int phoneNumber = Integer.parseInt(in.nextLine());
+        String contactName = cBook.getContactName(phoneNumber);
+        if(contactName.equals("")){
+            System.out.println("Phone number does not exist.");
+        }
+        else
+            System.out.println(contactName);
+    }
+
+    /**
+     * checkDuplicateNumbers - Check if there are contacts with the same phone number
+     * @param cBook ContactBook's Object
+     */
     private static void checkDuplicateNumbers(ContactBook cBook) {
         if (cBook.getNumberOfContacts() != 0 && cBook.doesBookContainDuplicatePhoneNumbers()) {
             System.out.println(DUPLICATE_NUMBERS);
