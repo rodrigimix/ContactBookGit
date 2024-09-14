@@ -42,6 +42,17 @@ public class ContactBook {
         return counter;
     }
 
+        public String getContactName( int phoneNumber) {
+        String contactName = "";
+        if(getNumberOfContacts() == 0)
+            return contactName;
+        for (int i = 0; i < getNumberOfContacts(); i++) {
+            if (contacts[i].getPhone() == phoneNumber)
+                return contacts[i].getName();
+        }
+        return contactName;
+    }
+
     /**
      * addContact - add the contact on the ContactBook
      * @param name Name of the person
@@ -160,4 +171,14 @@ public class ContactBook {
         return contacts[currentContact++];
     }
 
+    public boolean doesBookContainDuplicatePhoneNumbers() {
+        for (int i = 0; i < counter-1; i++) {
+            for (int j = i+1; j < counter; j++) {
+                if ( contacts[i].getPhone() == contacts[j].getPhone()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
